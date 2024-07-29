@@ -4,6 +4,8 @@
  */
 package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
+import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+
 /**
  *
  * @author digis
@@ -14,4 +16,6 @@ public interface AlumnoDAO {
     // TIPO RETORNO + NOMBRE METODO + PARAMETROS
     // SIN IMPLEMENTACION
     Object GetAll();
+    int Add(Alumno alumno);
+   // Object Add(Alumno alumno);
 }

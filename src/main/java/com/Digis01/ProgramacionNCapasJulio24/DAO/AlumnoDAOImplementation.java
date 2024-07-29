@@ -4,6 +4,7 @@
  */
 package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
+import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,6 +36,14 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
 //        Object datos = jdbcTemplate.query(query, new AlumnoRowMapper());
 //        return datos;
         return jdbcTemplate.query(query, new AlumnoRowMapper());
+    }
+
+    @Override
+    public int Add(Alumno alumno) {
+        String query = "INSERT INTO Alumno(Nombre,Apellido) VALUES(?,?)";
+        //DE ustedes
+        //jdcbTemplate INSERT
+        return jdbcTemplate.update(query);
     }
     
 }

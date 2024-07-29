@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -28,7 +30,21 @@ public class AlumnoController {
     public String GetAll(Model model){
         Object datos = alumnoDAOImplementation.GetAll();
         model.addAttribute("Alumnos", (List<Alumno>)datos);
-        return "GetAll";
+        return "AlumnoGetAll";
     }
+    
+    @GetMapping("/Form")
+    public String Form(Model model){
+        model.addAttribute("Alumno", new Alumno());
+        return "AlumnoForm";
+    }
+    
+    @PostMapping("/Form")
+    public String Form(@ModelAttribute Alumno alumno){
+        int rowAffetted = alumnoDAOImplementation.Add(alumno);
+        return "tore GetAll"; // toRedirec
+    }
+    //Recibir la informacion de la vista
+    
     
 }
