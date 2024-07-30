@@ -17,5 +17,6 @@ public interface AlumnoDAO {
     // SIN IMPLEMENTACION
     Object GetAll();
     int Add(Alumno alumno);
+    Object GetById(int idAlumno);
    // Object Add(Alumno alumno);
 }

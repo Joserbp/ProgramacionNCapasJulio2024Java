@@ -32,7 +32,7 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
     
     @Override
     public Object GetAll() {
-        String query = "SELECT Nombre,Apellido FROM Alumno"; //TODOS LOS DATOS
+        String query = "SELECT IdAlumno,Nombre,Apellido FROM Alumno"; //TODOS LOS DATOS
 //        Object datos = jdbcTemplate.query(query, new AlumnoRowMapper());
 //        return datos;
         return jdbcTemplate.query(query, new AlumnoRowMapper());
@@ -50,6 +50,14 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
                 alumno.getCelular(),
                 alumno.getEmail(),
                 alumno.getSemestre().getIdSemestre());
+    }
+
+    @Override
+    public Object GetById(int idAlumno) {
+        String query = "SELECT IdAlumno,Nombre,Apellido FROM Alumno WHERE IdAlumno = ?"; //TODOS LOS DATOS
+//        Object datos = jdbcTemplate.query(query, new AlumnoRowMapper());
+//        return datos;
+        return jdbcTemplate.query(query, new AlumnoRowMapper(), idAlumno);
     }
     
 }

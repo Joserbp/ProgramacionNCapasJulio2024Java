@@ -13,14 +13,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <div class="container">
-            <a th:href="@{/Alumno/Form}" class="btn btn-success">+</a>
+            <a th:href="@{/Alumno/Form/{idAlumno}(idAlumno=0)}" class="btn btn-success">+</a>
             <table class="table table-responsive table-bordered">
             <thead>
+            <th class="text-center">Actualizar</th>
             <th class="text-center">Nombre</th>
             <th  class="text-center">Apellido</th>
             </thead>
             <tbody>
                 <tr th:each="alumno : ${Alumnos}">
+                    <td><a th:href='@{/Alumno/Form/{idAlumno}(idAlumno=${alumno.IdAlumno})}' class="btn btn-warning"></a></td>
                     <td th:text="${alumno.Nombre}"></td>
                     <td th:text="${alumno.Apellido}"></td>
                 </tr>

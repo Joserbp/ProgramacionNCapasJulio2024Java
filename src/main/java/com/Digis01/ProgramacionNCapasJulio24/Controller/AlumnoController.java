@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,19 +38,30 @@ public class AlumnoController {
         return "AlumnoGetAll";
     }
     
-    @GetMapping("/Form") //Mostar el form
-    public String Form(Model model){
-        Alumno alumno = new Alumno();
-        alumno.setSemestre(new Semestre());
+    @GetMapping("/Form/{idAlumno}") //Mostar el form
+    public String Form(@PathVariable int idAlumno,Model model){
         
+        if(idAlumno == 0){ //ADD
+            Alumno alumno = new Alumno();
+            alumno.setSemestre(new Semestre());      
+            model.addAttribute("Alumno", alumno);     
+        }else{  //Update
+            Object alumnoActualizar = alumnoDAOImplementation.GetById(idAlumno);
+            List<Alumno> alumnos = (List<Alumno>)alumnoActualizar;
+            Alumno alumno = alumnos.get(0);         
+            model.addAttribute("Alumno", alumno);
+        }
         Object datosSemestre = semestreDAOImplementation.GetAll();
         model.addAttribute("Semestres", (List<Semestre>)datosSemestre);
-        model.addAttribute("Alumno", alumno);
         return "AlumnoForm";
     }
     
+    
     @PostMapping("/Form")
     public String Form(@ModelAttribute Alumno alumno){
+        //Validar el ID
+        //Id = 0 ADD
+        //ID != 0 UPDATE
         int rowAffetted = alumnoDAOImplementation.Add(alumno);
         return "redirect:/Alumno/GetAll";
     }
