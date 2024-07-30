@@ -5,7 +5,9 @@
 package com.Digis01.ProgramacionNCapasJulio24.Controller;
 
 import com.Digis01.ProgramacionNCapasJulio24.DAO.AlumnoDAOImplementation;
+import com.Digis01.ProgramacionNCapasJulio24.DAO.SemestreDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class AlumnoController {
     
     @Autowired
     private AlumnoDAOImplementation alumnoDAOImplementation;
+    @Autowired
+    private SemestreDAOImplementation semestreDAOImplementation;
     
     @GetMapping("/GetAll")
     public String GetAll(Model model){
@@ -33,16 +37,21 @@ public class AlumnoController {
         return "AlumnoGetAll";
     }
     
-    @GetMapping("/Form")
+    @GetMapping("/Form") //Mostar el form
     public String Form(Model model){
-        model.addAttribute("Alumno", new Alumno());
+        Alumno alumno = new Alumno();
+        alumno.setSemestre(new Semestre());
+        
+        Object datosSemestre = semestreDAOImplementation.GetAll();
+        model.addAttribute("Semestres", (List<Semestre>)datosSemestre);
+        model.addAttribute("Alumno", alumno);
         return "AlumnoForm";
     }
     
     @PostMapping("/Form")
     public String Form(@ModelAttribute Alumno alumno){
         int rowAffetted = alumnoDAOImplementation.Add(alumno);
-        return "tore GetAll"; // toRedirec
+        return "redirect:/Alumno/GetAll";
     }
     //Recibir la informacion de la vista
     

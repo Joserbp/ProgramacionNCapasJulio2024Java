@@ -16,6 +16,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <br>
             <label>Apellido</label>
             <input type="text" placeholder="Ingresa tu apellido" th:field="*{Apellido}">
+            <br>
+            <label>Fecha Nacimiento</label>
+            <input type="text" placeholder="Ingresa tu Fecha" th:field="*{FechaNacimiento}">
+            <br>
+            <label>Genero</label>
+            <input type="text" placeholder="Ingresa tu Genero" th:field="*{Genero}">
+            <br>
+            <label>Telefono</label>
+            <input type="text" placeholder="Ingresa tu Telefono" th:field="*{Telefono}">
+            <br>
+            <label>Celular</label>
+            <input type="text" placeholder="Ingresa tu Celular" th:field="*{Celular}">
+            <br>
+            <label>Email</label>
+            <input type="text" placeholder="Ingresa tu Email" th:field="*{Email}">
+            <br>
+            <label>Semestre</label>
+            <select th:field="*{Semestre.IdSemestre}">
+                <option value="0">Seleccione un Semestre</option>
+                <option th:each="semestre : ${Semestres}" th:value="${semestre.IdSemestre}" th:text="${semestre.Nombre}"></option>
+            </select>
+            <br>
             <button type="submit">Guardar</button>
         </form>
     </body>

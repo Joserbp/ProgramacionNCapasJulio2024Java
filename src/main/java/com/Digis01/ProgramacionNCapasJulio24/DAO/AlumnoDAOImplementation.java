@@ -40,10 +40,16 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
 
     @Override
     public int Add(Alumno alumno) {
-        String query = "INSERT INTO Alumno(Nombre,Apellido) VALUES(?,?)";
-        //DE ustedes
-        //jdcbTemplate INSERT
-        return jdbcTemplate.update(query);
+        String query = "INSERT INTO Alumno(Nombre,Apellido,FechaNacimiento,Genero,Telefono,Celular,Email,IdSemestre)  VALUES (?,?,TO_DATE(?,'yyyy-mm-dd'),?,?,?,?,?)";
+        return jdbcTemplate.update(query,
+                alumno.getNombre(),
+                alumno.getApellido(),
+                alumno.getFechaNacimiento(),
+                alumno.getGenero(),
+                alumno.getTelefono(),
+                alumno.getCelular(),
+                alumno.getEmail(),
+                alumno.getSemestre().getIdSemestre());
     }
     
 }
