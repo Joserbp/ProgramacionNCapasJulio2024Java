@@ -7,6 +7,7 @@ package com.Digis01.ProgramacionNCapasJulio24.Controller;
 import com.Digis01.ProgramacionNCapasJulio24.DAO.AlumnoDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.DAO.SemestreDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,9 @@ public class AlumnoController {
         //Validar el ID
         //Id = 0 ADD
         //ID != 0 UPDATE
-        int rowAffetted = alumnoDAOImplementation.Add(alumno);
+        //int rowAffetted = alumnoDAOImplementation.Add(alumno);
+        Result result = alumnoDAOImplementation.AddSP(alumno);
+        int stop;
         return "redirect:/Alumno/GetAll";
     }
     //Recibir la informacion de la vista

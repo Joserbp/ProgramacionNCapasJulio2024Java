@@ -5,6 +5,7 @@
 package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 
 /**
  *
@@ -18,5 +19,6 @@ public interface AlumnoDAO {
     Object GetAll();
     int Add(Alumno alumno);
     Object GetById(int idAlumno);
+    Result AddSP(Alumno alumno);
    // Object Add(Alumno alumno);
 }
