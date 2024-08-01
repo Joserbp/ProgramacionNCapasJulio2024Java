@@ -34,8 +34,9 @@ public class AlumnoController {
     
     @GetMapping("/GetAll")
     public String GetAll(Model model){
-        Object datos = alumnoDAOImplementation.GetAll();
-        model.addAttribute("Alumnos", (List<Alumno>)datos);
+        //Object datos = alumnoDAOImplementation.GetAll();
+        Result result = alumnoDAOImplementation.GetAllSP();
+        model.addAttribute("Alumnos", (List<Alumno>)result.object);
         return "AlumnoGetAll";
     }
     

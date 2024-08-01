@@ -20,5 +20,6 @@ public interface AlumnoDAO {
     int Add(Alumno alumno);
     Object GetById(int idAlumno);
     Result AddSP(Alumno alumno);
+    Result GetAllSP();
    // Object Add(Alumno alumno);
 }

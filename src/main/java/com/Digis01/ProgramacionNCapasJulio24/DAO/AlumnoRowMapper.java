@@ -5,6 +5,7 @@
 package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,9 +20,11 @@ public class AlumnoRowMapper implements RowMapper<Alumno>{
     public Alumno mapRow(ResultSet rs, int rowNum) throws SQLException {
         Alumno alumno = new Alumno();
         alumno.setIdAlumno(rs.getInt("IdAlumno"));
-        alumno.setNombre(rs.getString("Nombre"));
+        alumno.setNombre(rs.getString("NombreAlumno"));
         alumno.setApellido(rs.getString("Apellido"));
-        
+        alumno.setSemestre(new Semestre());
+        alumno.getSemestre().setIdSemestre(rs.getInt("IdSemestre"));
+        alumno.getSemestre().setNombre(rs.getString("NombreSemestre"));
         return alumno;
     }
     

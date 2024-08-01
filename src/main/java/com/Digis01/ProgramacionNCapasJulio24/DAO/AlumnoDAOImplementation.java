@@ -6,6 +6,10 @@ package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -99,6 +103,39 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
             result.exception = ex;
+        }
+        return result;
+    }
+
+    @Override
+    public Result GetAllSP() {
+        Result result = new Result();
+        try{
+            List<Alumno> alumnos = jdbcTemplate.execute("{Call AlumnoGetAll(?)}", (CallableStatementCallback<List<Alumno>>) callableStatementCallback ->{ 
+               callableStatementCallback.registerOutParameter("pDatosCursor", Types.REF_CURSOR);
+               callableStatementCallback.execute();
+               ResultSet rs = (ResultSet)callableStatementCallback.getObject("pDatosCursor");
+               List<Alumno> alumnosList = new ArrayList();
+               AlumnoRowMapper alumnoRowMapper = new AlumnoRowMapper();
+               while(rs.next()){
+                   Alumno alumno = alumnoRowMapper.mapRow(rs,rs.getRow());
+                   alumnosList.add(alumno);
+               }
+               return alumnosList;
+            });
+            
+            if(alumnos != null){
+                result.correct = true;
+                result.object = alumnos;
+            } else{
+                result.correct = false;
+                result.errorMessage = "La tabla alumno esta vacia";
+            }
+            
+        }catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.exception = ex; 
         }
         return result;
     }
