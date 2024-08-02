@@ -3,42 +3,41 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <form th:action="@{/Alumno/Form}" method="post" th:object="${Alumno}">
-            <label>Nombre</label>
-            <input type="text" placeholder="Ingresa tu nombre" th:field="*{Nombre}">
-            <br>
-            <label>Apellido</label>
-            <input type="text" placeholder="Ingresa tu apellido" th:field="*{Apellido}">
-            <br>
-            <label>Fecha Nacimiento</label>
-            <input type="text" placeholder="Ingresa tu Fecha" th:field="*{FechaNacimiento}">
-            <br>
-            <label>Genero</label>
-            <input type="text" placeholder="Ingresa tu Genero" th:field="*{Genero}">
-            <br>
-            <label>Telefono</label>
-            <input type="text" placeholder="Ingresa tu Telefono" th:field="*{Telefono}">
-            <br>
-            <label>Celular</label>
-            <input type="text" placeholder="Ingresa tu Celular" th:field="*{Celular}">
-            <br>
-            <label>Email</label>
-            <input type="text" placeholder="Ingresa tu Email" th:field="*{Email}">
-            <br>
-            <label>Semestre</label>
-            <select th:field="*{Semestre.IdSemestre}">
-                <option value="0">Seleccione un Semestre</option>
-                <option th:each="semestre : ${Semestres}" th:value="${semestre.IdSemestre}" th:text="${semestre.Nombre}"></option>
-            </select>
-            <br>
-            <button type="submit">Guardar</button>
-        </form>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+    <body layout:fragment="body">
+        <div class="container">
+            <form th:action="@{/Alumno/Form}" method="post" th:object="${Alumno}">
+                <label>Nombre</label>
+                <input type="text" placeholder="Ingresa tu nombre" th:field="*{Nombre}">
+                <br>
+                <label>Apellido</label>
+                <input type="text" placeholder="Ingresa tu apellido" th:field="*{Apellido}">
+                <br>
+                <label>Fecha Nacimiento</label>
+                <input type="text" placeholder="Ingresa tu Fecha" th:field="*{FechaNacimiento}">
+                <br>
+                <label>Genero</label>
+                <input type="text" placeholder="Ingresa tu Genero" th:field="*{Genero}">
+                <br>
+                <label>Telefono</label>
+                <input type="text" placeholder="Ingresa tu Telefono" th:field="*{Telefono}">
+                <br>
+                <label>Celular</label>
+                <input type="text" placeholder="Ingresa tu Celular" th:field="*{Celular}">
+                <br>
+                <label>Email</label>
+                <input type="text" placeholder="Ingresa tu Email" th:field="*{Email}">
+                <br>
+                <label>Semestre</label>
+                <select th:field="*{Semestre.IdSemestre}">
+                    <option value="0">Seleccione un Semestre</option>
+                    <option th:each="semestre : ${Semestres}" th:value="${semestre.IdSemestre}" th:text="${semestre.Nombre}"></option>
+                </select>
+                <br>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
     </body>
 </html>
