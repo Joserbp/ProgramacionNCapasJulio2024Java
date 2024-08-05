@@ -17,6 +17,15 @@ public class Alumno {
     private String Telefono;
     private String Celular;
     private String Email;
+    private Direccion Direccion;
+
+    public Direccion getDireccion() {
+        return Direccion;
+    }
+
+    public void setDireccion(Direccion Direccion) {
+        this.Direccion = Direccion;
+    }
     
     //Propiedad de navegacion --- FK
     private Semestre Semestre;

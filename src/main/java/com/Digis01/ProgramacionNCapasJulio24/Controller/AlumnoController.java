@@ -5,6 +5,7 @@
 package com.Digis01.ProgramacionNCapasJulio24.Controller;
 
 import com.Digis01.ProgramacionNCapasJulio24.DAO.AlumnoDAOImplementation;
+import com.Digis01.ProgramacionNCapasJulio24.DAO.DireccionDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.DAO.SemestreDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
@@ -31,6 +32,8 @@ public class AlumnoController {
     private AlumnoDAOImplementation alumnoDAOImplementation;
     @Autowired
     private SemestreDAOImplementation semestreDAOImplementation;
+    @Autowired
+    private DireccionDAOImplementation direccionDAOImplementation;
     
     @GetMapping("/GetAll")
     public String GetAll(Model model){
@@ -66,6 +69,9 @@ public class AlumnoController {
         //ID != 0 UPDATE
         //int rowAffetted = alumnoDAOImplementation.Add(alumno);
         Result result = alumnoDAOImplementation.AddSP(alumno);
+                //Como recuperar el IdAlumno insertado   //SP
+                //result.Object == IDRecuperado
+        Result resultDireccion = direccionDAOImplementation.Add(alumno.getDireccion(), (int)result.object);
         int stop;
         return "redirect:/Alumno/GetAll";
     }

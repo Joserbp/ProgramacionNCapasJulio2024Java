@@ -35,6 +35,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <option value="0">Seleccione un Semestre</option>
                     <option th:each="semestre : ${Semestres}" th:value="${semestre.IdSemestre}" th:text="${semestre.Nombre}"></option>
                 </select>
+               
+                <input type="text" th:field="*{Direccion.Calle}">
+                <input type="text" th:field="*{Direccion.NumeroExterior}">
+                <input type="text" th:field="*{Direccion.NumeroInterior}">
+                <input type="text" th:field="*{Direccion.Colonia.IdColonia}">
                 <br>
                 <button type="submit">Guardar</button>
             </form>
