@@ -79,7 +79,7 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
     public Result AddSP(Alumno alumno) {
         Result result = new Result();
         try{
-            int rowAffeted = jdbcTemplate.execute("{Call AlumnoAdd(?,?,?,?,?,?,?)}", (CallableStatementCallback<Integer>) callableStatementCallback ->{
+            int rowAffeted = jdbcTemplate.execute("{Call AlumnoAdd(?,?,?,?,?,?,?,?)}", (CallableStatementCallback<Integer>) callableStatementCallback ->{
             callableStatementCallback.setString("pNombre", alumno.getNombre());
             callableStatementCallback.setString("pApellido", alumno.getApellido());
             callableStatementCallback.setString("pFechaNacimiento", alumno.getFechaNacimiento());
@@ -87,8 +87,10 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             callableStatementCallback.setString("pTelefono", alumno.getTelefono());
             callableStatementCallback.setString("pCelular", alumno.getCelular());
             callableStatementCallback.setString("pEmail", alumno.getEmail());
+            callableStatementCallback.registerOutParameter("pIdAlumno", Types.NUMERIC);
             
             callableStatementCallback.execute();
+            result.object = callableStatementCallback.getObject("pIdAlumno");
             return callableStatementCallback.getUpdateCount();
             });
             

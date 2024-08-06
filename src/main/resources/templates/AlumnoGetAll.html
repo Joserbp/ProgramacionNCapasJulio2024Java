@@ -19,14 +19,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <th class="text-center">Actualizar</th>
             <th class="text-center">Nombre</th>
             <th  class="text-center">Apellido</th>
+            <th  class="text-center">Direccion</th>
+            <!--Vanessa Cruz Calle:Insurgente,N°I:120,N°E:15,Col:Renacimiento,CP:06500,CDMX,Pais:Mexico-->
             </thead>
             <tbody>
                 <tr th:each="alumno : ${Alumnos}">
                     <td><a th:href='@{/Alumno/Form/{idAlumno}(idAlumno=${alumno.IdAlumno})}' class="btn btn-warning"></a></td>
                     <td th:text="${alumno.Nombre}"></td>
                     <td th:text="${alumno.Apellido}"></td>
+                    <td th:text="Calle: + ${alumno.Direccion.Calle}, N°I: ${alumno.Direccion.NumeroInterior}, Pais: ${alumno.Direccion.Colonia.Estado.Pais.Nombre} "></td>
                 </tr>
-            </tbody>
+            </tbody> 
         </table>
         </div>
         

@@ -71,7 +71,8 @@ public class AlumnoController {
         Result result = alumnoDAOImplementation.AddSP(alumno);
                 //Como recuperar el IdAlumno insertado   //SP
                 //result.Object == IDRecuperado
-        Result resultDireccion = direccionDAOImplementation.Add(alumno.getDireccion(), (int)result.object);
+        int idAlumnoRecuperado = Integer.parseInt(result.object.toString());
+        Result resultDireccion = direccionDAOImplementation.Add(alumno.getDireccion(), idAlumnoRecuperado);
         int stop;
         return "redirect:/Alumno/GetAll";
     }

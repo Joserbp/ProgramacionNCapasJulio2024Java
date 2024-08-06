@@ -9,11 +9,13 @@ import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author digis
  */
+@Repository
 public class DireccionDAOImplementation implements DireccionDAO {
 
     private JdbcTemplate jdbcTemplate;
@@ -27,6 +29,7 @@ public class DireccionDAOImplementation implements DireccionDAO {
         Result result = new Result();
         try{
             //SP DireccionAdd
+            //Callback.setInt("pIdAlumno", IdAlumno);
         }
         catch(Exception ex){
             
