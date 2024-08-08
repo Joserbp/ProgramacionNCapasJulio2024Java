@@ -25,14 +25,14 @@ public class AlumnoRowMapper implements RowMapper<Alumno>{
         alumno.getSemestre().setIdSemestre(rs.getInt("IdSemestre"));
         alumno.getSemestre().setNombre(rs.getString("NombreSemestre"));
         alumno.setDireccion(new Direccion());
-        alumno.getDireccion().setIdDireccion(rs.getInt("IdDireccion"));
+       // alumno.getDireccion().setIdDireccion(rs.getInt("IdDireccion"));
         alumno.getDireccion().setCalle(rs.getNString("Calle"));
         alumno.getDireccion().setNumeroExterior(rs.getString("NumeroExterior"));
         alumno.getDireccion().setColonia(new Colonia());
         alumno.getDireccion().getColonia().setIdColonia(rs.getInt("IdColonia"));
         alumno.getDireccion().getColonia().setNombre(rs.getString("NombreColonia"));
         
-        alumno.getDireccion().getColonia().getEstado().getPais().setNombre(rs.getString("NombrePais"));
+        //alumno.getDireccion().getColonia().getEstado().getPais().setNombre(rs.getString("NombrePais"));
         return alumno;
     }
     

@@ -35,7 +35,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <option value="0">Seleccione un Semestre</option>
                     <option th:each="semestre : ${Semestres}" th:value="${semestre.IdSemestre}" th:text="${semestre.Nombre}"></option>
                 </select>
+                
+                <label>Pais</label>
+                <select id="ddlPais" th:field="*{Direccion.Colonia.Estado.Pais.IdPais}">
+                    <option value="0">Seleccione un Pais</option>
+                    <option th:each="pais : ${Paises}" th:value="${pais.IdPais}" th:text="${pais.Nombre}"></option>
+                </select>
+                
+                 <label>Estado</label>
+                <select id="ddlEstado" th:field="*{Direccion.Colonia.Estado.IdEstado}">
+                    <option value="0">Seleccione un Estado</option>
+                </select>
                
+                 <label>Colonia</label>
+                <select id="ddlMunicioio" th:field="*{Direccion.Colonia.IdColonia}">
+                    <option value="0">Seleccione un Colonia</option>
+                </select>
+                 
+                 
                 <input type="text" th:field="*{Direccion.Calle}">
                 <input type="text" th:field="*{Direccion.NumeroExterior}">
                 <input type="text" th:field="*{Direccion.NumeroInterior}">
@@ -46,3 +63,48 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </div>
     </body>
 </html>
+
+<script>
+    
+    $("#ddlPais").change(function(){
+        $.ajax({
+            type : "GET" ,
+            data: { IdPais : document.getElementById("ddlPais").value},
+            dataType: "json" ,
+            url : "/Alumno/EstadoGetByIdPais",
+            success: function(estados){
+                $("#ddlEstado").empty();
+                $("#ddlEstado").append('<option value=0>Seleccione un Estado</option>');
+                $.each(estados, function(i,estado){
+                    $("#ddlEstado").append('<option value='+ estado.idEstado + '>' + estado.nombre + '</option>');
+                });
+            },
+            error: function(){
+                alert("Ocurrio un error");
+            } 
+        });
+    });
+    
+    $("#ddlEstado").change(function(){
+        $.ajax({
+            type : "GET" ,
+            data: { IdEstado : document.getElementById("ddlEstado").value},
+            dataType: "json" ,
+            url : "/Alumno/ColoniaGetByIdEstado",
+            success: function(colonias){
+                $("#ddlColonia").empty();
+                $("#ddlColonia").append('<option value=0>Seleccione una Colonia</option>');
+                $.each(colonias, function(i,colonia){
+                    $("#ddlColonia").append('<option value='+ colonia.idcolonia + '>' + colonia.nombre + '</option>');
+                });
+            },
+            error: function(){
+                alert("Ocurrio un error");
+            } 
+        });
+    });
+      
+    function EstadoGetByIdPais(){
+        
+    }
+</script>

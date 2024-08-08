@@ -6,8 +6,12 @@ package com.Digis01.ProgramacionNCapasJulio24.Controller;
 
 import com.Digis01.ProgramacionNCapasJulio24.DAO.AlumnoDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.DAO.DireccionDAOImplementation;
+import com.Digis01.ProgramacionNCapasJulio24.DAO.EstadoDAOImplementation;
+import com.Digis01.ProgramacionNCapasJulio24.DAO.PaisDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.DAO.SemestreDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Estado;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Pais;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import java.util.List;
@@ -19,6 +23,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -34,7 +40,12 @@ public class AlumnoController {
     private SemestreDAOImplementation semestreDAOImplementation;
     @Autowired
     private DireccionDAOImplementation direccionDAOImplementation;
-    
+    @Autowired
+    private PaisDAOImplementation paisDAOImplementation;
+    @Autowired
+    private EstadoDAOImplementation estadoDAOImplementation;
+            
+            
     @GetMapping("/GetAll")
     public String GetAll(Model model){
         //Object datos = alumnoDAOImplementation.GetAll();
@@ -57,6 +68,8 @@ public class AlumnoController {
             model.addAttribute("Alumno", alumno);
         }
         Object datosSemestre = semestreDAOImplementation.GetAll();
+        Result resultPaises = paisDAOImplementation.GetAll();
+        model.addAttribute("Paises", (List<Pais>) resultPaises.object );
         model.addAttribute("Semestres", (List<Semestre>)datosSemestre);
         return "AlumnoForm";
     }
@@ -78,5 +91,11 @@ public class AlumnoController {
     }
     //Recibir la informacion de la vista
     
+    @GetMapping("/EstadoGetByIdPais")
+    @ResponseBody
+    public List<Estado> EstadoGetByIdPais(@RequestParam("IdPais") int IdPais){
+        Result result = estadoDAOImplementation.GetByIdPais(IdPais);
+        return (List<Estado>)result.object;
+    }
     
 }
