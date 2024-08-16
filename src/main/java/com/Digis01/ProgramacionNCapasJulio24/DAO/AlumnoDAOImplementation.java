@@ -87,10 +87,11 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             callableStatementCallback.setString("pTelefono", alumno.getTelefono());
             callableStatementCallback.setString("pCelular", alumno.getCelular());
             callableStatementCallback.setString("pEmail", alumno.getEmail());
-            callableStatementCallback.registerOutParameter("pIdAlumno", Types.NUMERIC);
+            callableStatementCallback.setString("pImagen", alumno.getImagen());
+            //callableStatementCallback.registerOutParameter("pIdAlumno", Types.NUMERIC);
             
             callableStatementCallback.execute();
-            result.object = callableStatementCallback.getObject("pIdAlumno");
+            //result.object = callableStatementCallback.getObject("pIdAlumno");
             return callableStatementCallback.getUpdateCount();
             });
             

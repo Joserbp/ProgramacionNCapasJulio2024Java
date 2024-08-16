@@ -14,7 +14,9 @@ import com.Digis01.ProgramacionNCapasJulio24.ML.Estado;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Pais;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
+import java.io.IOException;
 import java.util.List;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -76,11 +79,25 @@ public class AlumnoController {
     
     
     @PostMapping("/Form")
-    public String Form(@ModelAttribute Alumno alumno){
+    public String Form(@ModelAttribute Alumno alumno, @RequestParam("fileImagen") MultipartFile fileImage){ 
         //Validar el ID
         //Id = 0 ADD
         //ID != 0 UPDATE
         //int rowAffetted = alumnoDAOImplementation.Add(alumno);
+       
+        if(fileImage.getName() != ""){
+            try{
+            byte[] imagenBytes = fileImage.getBytes();
+            String imageBase64 = Base64.encodeBase64String(imagenBytes);//Base64 encode  encodeString 
+            alumno.setImagen(imageBase64); 
+            }
+            catch(IOException ex){
+                //Codigo pendiente
+            }
+        }
+        
+        
+              
         Result result = alumnoDAOImplementation.AddSP(alumno);
                 //Como recuperar el IdAlumno insertado   //SP
                 //result.Object == IDRecuperado

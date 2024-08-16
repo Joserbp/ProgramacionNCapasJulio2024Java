@@ -17,6 +17,15 @@ public class Alumno {
     private String Telefono;
     private String Celular;
     private String Email;
+    private String Imagen;
+
+    public String getImagen() {
+        return Imagen;
+    }
+
+    public void setImagen(String Imagen) {
+        this.Imagen = Imagen;
+    }
     private Direccion Direccion;
 
     public Direccion getDireccion() {
