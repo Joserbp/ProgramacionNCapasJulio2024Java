@@ -18,6 +18,15 @@ public class Alumno {
     private String Celular;
     private String Email;
     private String Imagen;
+    private int Status;
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
 
     public String getImagen() {
         return Imagen;

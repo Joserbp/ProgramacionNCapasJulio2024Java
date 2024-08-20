@@ -17,6 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <table class="table table-responsive table-bordered">
             <thead>
             <th class="text-center">Actualizar</th>
+            <th class="text-center">Status</th>
             <th class="text-center">Nombre</th>
             <th  class="text-center">Apellido</th>
             <th  class="text-center">NombreCompleto</th>
@@ -25,6 +26,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <tbody>
                 <tr th:each="alumno : ${Alumnos}">
                     <td><a th:href='@{/Alumno/Form/{idAlumno}(idAlumno=${alumno.IdAlumno})}' class="btn btn-warning"></a></td>
+                    <td>
+                       
+                        <div class="form-check form-switch">
+                            <input th:if="${alumno.Status == 0}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:onchange="ChangeStatus(this,[[${alumno.IdAlumno}]])">
+                            <input th:unless="${alumno.Status == 0}"class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked th:onchange="ChangeStatus(this,[[${alumno.IdAlumno}]])">
+                        </div>
+                        
+                    </td>
                     <td th:text="${alumno.Nombre}"></td>
                     <td th:text="${alumno.Apellido}"></td>
                     <td th:text="|Nombre: ${alumno.Nombre}, Apellido: ${alumno.Apellido}|"></td>
@@ -36,3 +45,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         
     </body>
 </html>
+
+<script>
+   function ChangeStatus(i,idAlumno){
+   var newStatus = i.checked;
+   $.ajax({
+        url : '/Alumno/ChangeStatus',
+        dataType : 'json',
+        type: 'GET',
+        data: {IdAlumno : idAlumno , Status : newStatus },
+        success: {
+        },
+        error : function(error){
+            alert();
+        }
+        ,
+   });
+   
+   
+   }
+</script>

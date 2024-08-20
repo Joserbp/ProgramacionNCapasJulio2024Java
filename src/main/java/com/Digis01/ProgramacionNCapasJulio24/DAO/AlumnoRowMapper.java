@@ -24,6 +24,7 @@ public class AlumnoRowMapper implements RowMapper<Alumno>{
         alumno.setSemestre(new Semestre());
         alumno.getSemestre().setIdSemestre(rs.getInt("IdSemestre"));
         alumno.getSemestre().setNombre(rs.getString("NombreSemestre"));
+        alumno.setStatus(rs.getInt("Status"));
         alumno.setDireccion(new Direccion());
        // alumno.getDireccion().setIdDireccion(rs.getInt("IdDireccion"));
         alumno.getDireccion().setCalle(rs.getNString("Calle"));

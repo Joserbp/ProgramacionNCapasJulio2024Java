@@ -21,5 +21,6 @@ public interface AlumnoDAO {
     Object GetById(int idAlumno);
     Result AddSP(Alumno alumno);
     Result GetAllSP();
+    Result ChangeStatus(int IdAlumno, int Status);
    // Object Add(Alumno alumno);
 }

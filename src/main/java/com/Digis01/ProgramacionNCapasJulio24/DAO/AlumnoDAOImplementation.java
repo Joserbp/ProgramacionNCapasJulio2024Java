@@ -143,4 +143,32 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
         return result;
     }
     
+    
+        @Override
+    public Result ChangeStatus(int IdAlumno, int Status) {
+        Result result = new Result();
+        try{
+            int rowAffeted = jdbcTemplate.execute("{Call AlumnoChangeStatus(?,?)}", (CallableStatementCallback<Integer>) callableStatementCallback ->{
+            callableStatementCallback.setInt("pIdAlumno", IdAlumno);
+            callableStatementCallback.setInt("pStatus", Status);
+            
+            callableStatementCallback.execute();
+            //result.object = callableStatementCallback.getObject("pIdAlumno");
+            return callableStatementCallback.getUpdateCount();
+            });
+            
+            if(rowAffeted != 0){
+                result.correct = true;
+            }else{
+                result.correct = false;
+                result.errorMessage = "No se actualizo el status del registro";
+            }
+        }
+        catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.exception = ex;
+        }
+        return result;
+    }
 }
