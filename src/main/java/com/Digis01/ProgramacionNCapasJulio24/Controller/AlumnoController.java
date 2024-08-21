@@ -118,13 +118,12 @@ public class AlumnoController {
     @GetMapping("/ChangeStatus")
     @ResponseBody
     public Result ChangeStatus(@RequestParam("IdAlumno")int IdAlumno, @RequestParam("Status")boolean Status){
-        int newStatus;  //COMO USAR UN OPERADOR TERNARIO
-        if(Status){
-            newStatus = 1;
-        }else{
-            newStatus = 0;
-        }
-        Result result = alumnoDAOImplementation.ChangeStatus(IdAlumno, newStatus);
+
+        int newStatusTernario = (Status) ? 1 : 0;
+        // Operador ternario es un if/else de una sola linea
+        // (condicion) ? verdadero : falso  //RETORNAR
+        
+        Result result = alumnoDAOImplementation.ChangeStatus(IdAlumno, newStatusTernario);
         return result;
     }
 }

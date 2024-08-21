@@ -6,6 +6,7 @@ package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
+import jakarta.persistence.EntityManager;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
         //JDBC
     
     private JdbcTemplate jdbcTemplate;
-
+    private EntityManager entityManager;
+    
     @Autowired
     public AlumnoDAOImplementation(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.entityManager = entityManager;
     }
     
     
@@ -170,5 +173,9 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             result.exception = ex;
         }
         return result;
+    }
+    
+    public static Result AddJPA(Alumno alumno){
+        entityManager.
     }
 }
