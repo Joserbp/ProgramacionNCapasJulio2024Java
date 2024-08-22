@@ -7,10 +7,16 @@ package com.Digis01.ProgramacionNCapasJulio24.DAO;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -33,7 +39,7 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
     private EntityManager entityManager;
     
     @Autowired
-    public AlumnoDAOImplementation(DataSource dataSource) {
+    public AlumnoDAOImplementation(DataSource dataSource, EntityManager entityManager) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.entityManager = entityManager;
     }
@@ -147,7 +153,7 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
     }
     
     
-        @Override
+    @Override
     public Result ChangeStatus(int IdAlumno, int Status) {
         Result result = new Result();
         try{
@@ -174,8 +180,38 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
         }
         return result;
     }
-    
-    public static Result AddJPA(Alumno alumno){
-        entityManager.
+
+    @Override
+    @Transactional
+    public Result AddJPA(Alumno alumno) {
+        Result result = new Result();
+        try{
+            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno alumnoJPA = new com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno();
+            alumnoJPA.setNombre(alumno.getNombre());
+            alumnoJPA.setApellido(alumno.getApellido());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date fechaConvertida = dateFormat.parse(alumno.getFechaNacimiento());
+            alumnoJPA.setFechaNacimiento(fechaConvertida);
+            alumnoJPA.setGenero(alumno.getGenero());
+            alumnoJPA.setTelefono(alumno.getTelefono());
+            alumnoJPA.setCelular(alumno.getCelular());
+            alumnoJPA.setEmail(alumno.getEmail());
+            alumnoJPA.setSemestre(new com.Digis01.ProgramacionNCapasJulio24.JPA.Semestre());
+            alumnoJPA.getSemestre().setIdSemestre(alumno.getSemestre().getIdSemestre());
+            alumnoJPA.setImagen(alumno.getImagen());
+            alumnoJPA.setStatus(1);
+            entityManager.persist(alumnoJPA); //ADD
+            entityManager.merge(alumnoJPA); //UPDATE
+            entityManager.remove(alumnoJPA); //Lo van investigar
+            
+            result.correct = true;
+        }
+        catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.exception = ex;
+        }
+        return result;
+
     }
 }

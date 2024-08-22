@@ -23,4 +23,5 @@ public interface AlumnoDAO {
     Result GetAllSP();
     Result ChangeStatus(int IdAlumno, int Status);
    // Object Add(Alumno alumno);
+    Result AddJPA(Alumno alumno);
 }

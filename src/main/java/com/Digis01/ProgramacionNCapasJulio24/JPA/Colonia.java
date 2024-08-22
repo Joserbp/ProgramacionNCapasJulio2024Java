@@ -17,23 +17,23 @@ import jakarta.persistence.ManyToOne;
  * @author digis
  */
 @Entity
-public class Estado {
+public class Colonia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idestado")
-    private int IdEstado;
+    @Column(name = "idcolonia")
+    private int IdColonia;
     @Column(name = "nombre")
     private String Nombre;
     @ManyToOne
-    @JoinColumn(name = "idpais")
-    public Pais Pais; 
+    @JoinColumn(name = "idestado")
+    public Estado Estado; // Propieddad de navegación
 
-    public int getIdEstado() {
-        return IdEstado;
+    public int getIdColonia() {
+        return IdColonia;
     }
 
-    public void setIdEstado(int IdEstado) {
-        this.IdEstado = IdEstado;
+    public void setIdColonia(int IdColonia) {
+        this.IdColonia = IdColonia;
     }
 
     public String getNombre() {

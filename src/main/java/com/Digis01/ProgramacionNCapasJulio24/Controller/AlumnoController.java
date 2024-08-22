@@ -98,7 +98,8 @@ public class AlumnoController {
         
         
               
-        Result result = alumnoDAOImplementation.AddSP(alumno);
+        //Result result = alumnoDAOImplementation.AddSP(alumno);
+        Result result = alumnoDAOImplementation.AddJPA(alumno);
                 //Como recuperar el IdAlumno insertado   //SP
                 //result.Object == IDRecuperado
         int idAlumnoRecuperado = Integer.parseInt(result.object.toString());

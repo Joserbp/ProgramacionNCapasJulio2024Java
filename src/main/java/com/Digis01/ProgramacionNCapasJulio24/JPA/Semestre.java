@@ -20,6 +20,22 @@ public class Semestre{
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     @Column(name = "idsemestre")
     private int IdSemestre;
+
+    public int getIdSemestre() {
+        return IdSemestre;
+    }
+
+    public void setIdSemestre(int IdSemestre) {
+        this.IdSemestre = IdSemestre;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
     
     @Column(name = "nombre")
     private String Nombre;
