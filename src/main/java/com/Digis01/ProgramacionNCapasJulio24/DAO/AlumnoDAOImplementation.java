@@ -5,8 +5,12 @@
 package com.Digis01.ProgramacionNCapasJulio24.DAO;
 
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Colonia;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Direccion;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
+import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -216,6 +220,51 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             entityManager.persist(alumnoJPA); //ADD
             result.object = alumnoJPA.getIdAlumno();
             result.correct = true;
+        }
+        catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.exception = ex;
+        }
+        return result;
+
+    }
+    
+    @Override
+    @Transactional
+    public Result GetByIdJPA(int idAlumno) {
+        Result result = new Result();
+        try{
+            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno alumnoJPA = entityManager.find(com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno.class, idAlumno);
+            Alumno alumnoML = new Alumno();
+            alumnoML.setIdAlumno(alumnoJPA.getIdAlumno());
+            alumnoML.setNombre(alumnoJPA.getNombre());
+            alumnoML.setSemestre(new Semestre());
+            alumnoML.getSemestre().setIdSemestre(alumnoJPA.getSemestre().getIdSemestre());
+            
+            
+            //TypedQuery - Permite definir el tipo de resultados esperados
+                        // Ejecucion de querys
+                        
+            //JPQL Lenguaje de consulta orientada a objetos
+                 // Persistencia de JAVA
+                 // Opera sobre las Entidades
+               
+            //DIRECCION de Alumno
+            TypedQuery<com.Digis01.ProgramacionNCapasJulio24.JPA.Direccion> query = 
+                    entityManager.
+                            createQuery("FROM Direccion WHERE Alumno.IdAlumno "
+                                    + "=: pIdAlumno", com.Digis01.ProgramacionNCapasJulio24.JPA.Direccion.class);
+            query.setParameter("pIdAlumno", alumnoJPA.getIdAlumno());
+            
+            com.Digis01.ProgramacionNCapasJulio24.JPA.Direccion direccionJPA = query.getSingleResult();
+            
+            alumnoML.setDireccion(new Direccion());
+            alumnoML.getDireccion().setCalle(direccionJPA.getCalle());
+            alumnoML.getDireccion().setColonia(new Colonia());
+            alumnoML.getDireccion().getColonia().setCodigoPostal(direccionJPA.getColonia().getCodigoPostal());
+            result.object = alumnoML;          
+            
         }
         catch(Exception ex){
             result.correct = false;

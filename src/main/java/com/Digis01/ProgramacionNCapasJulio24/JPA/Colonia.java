@@ -24,6 +24,25 @@ public class Colonia {
     private int IdColonia;
     @Column(name = "nombre")
     private String Nombre;
+    
+     @Column(name = "codigopostal")
+    private String CodigoPostal;
+
+    public String getCodigoPostal() {
+        return CodigoPostal;
+    }
+
+    public void setCodigoPostal(String CodigoPostal) {
+        this.CodigoPostal = CodigoPostal;
+    }
+
+    public Estado getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(Estado Estado) {
+        this.Estado = Estado;
+    }
     @ManyToOne
     @JoinColumn(name = "idestado")
     public Estado Estado; // Propieddad de navegación

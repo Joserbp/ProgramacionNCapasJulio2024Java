@@ -65,9 +65,9 @@ public class AlumnoController {
             alumno.setSemestre(new Semestre());      
             model.addAttribute("Alumno", alumno);     
         }else{  //Update
-            Object alumnoActualizar = alumnoDAOImplementation.GetById(idAlumno);
-            List<Alumno> alumnos = (List<Alumno>)alumnoActualizar;
-            Alumno alumno = alumnos.get(0);         
+            Result alumnoActualizar = alumnoDAOImplementation.GetByIdJPA(idAlumno);
+        //    List<Alumno> alumnos = (List<Alumno>)alumnoActualizar;
+            Alumno alumno = (Alumno)alumnoActualizar.object;        
             model.addAttribute("Alumno", alumno);
         }
         Object datosSemestre = semestreDAOImplementation.GetAll();
