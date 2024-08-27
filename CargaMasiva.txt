@@ -1,0 +1,4 @@
+NOMBRE|APELLIDO|TELEFONO|CELULAR|GENERO|IDSEMESTRE|CORREO|FECHANACIMIENTO
+Diego Alejandro|Saavedra|234567|34567|H|2|diego@gmail.com|2002-09-17
+Alexander|Godinez|5555|88888|H|3|godinez@gmail.com|2000-02-20
+Marco|Millan|1234|4567|H|1|millam@gmail.com|2010-12-12

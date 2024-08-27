@@ -95,16 +95,20 @@ public class AlumnoController {
                 //Codigo pendiente
             }
         }
+        Result resultUpdate = alumnoDAOImplementation.UpdateJPA(alumno);
         
-        
-              
-        //Result result = alumnoDAOImplementation.AddSP(alumno);
+        if (alumno.getIdAlumno() == 0)  {
+                  //Result result = alumnoDAOImplementation.AddSP(alumno);
         Result result = alumnoDAOImplementation.AddJPA(alumno);
                 //Como recuperar el IdAlumno insertado   //SP
                 //result.Object == IDRecuperado
         int idAlumnoRecuperado = Integer.parseInt(result.object.toString());
         Result resultDireccion = direccionDAOImplementation.Add(alumno.getDireccion(), idAlumnoRecuperado);
-        int stop;
+  
+        }else{
+             Result result = alumnoDAOImplementation.UpdateJPA(alumno);
+        }
+
         return "redirect:/Alumno/GetAll";
     }
     //Recibir la informacion de la vista

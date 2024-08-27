@@ -187,6 +187,53 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
 
     @Override
     @Transactional
+    public Result UpdateJPA(Alumno alumno) {
+        Result result = new Result();
+        try{
+            
+            //NO VA EN ESTE METODO SOLO ES EJEMPLO
+            //REMOVE SE LE TIENE QUE ENVIAR EL REGISTRO A ELIMINAR
+                //GETBYID
+                    //REMOVE
+//                  
+//            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno AlumnoGetByIDJPA =  entityManager.find(com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno.class, 63);
+//            Alumno alumnoML = new Alumno();
+//            alumnoML.setNombre(AlumnoGetByIDJPA.getNombre());  //METODO DEL GETBYID
+//            entityManager.detach(AlumnoGetByIDJPA);
+//            
+            //
+            
+            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno alumnoJPA = new com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno();
+            alumnoJPA.setNombre(alumno.getNombre());
+            alumnoJPA.setApellido(alumno.getApellido());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date fechaConvertida = dateFormat.parse(alumno.getFechaNacimiento());
+            alumnoJPA.setFechaNacimiento(fechaConvertida);
+            alumnoJPA.setGenero(alumno.getGenero());
+            alumnoJPA.setTelefono(alumno.getTelefono());
+            alumnoJPA.setCelular(alumno.getCelular());
+            alumnoJPA.setEmail(alumno.getEmail());
+            alumnoJPA.setSemestre(new com.Digis01.ProgramacionNCapasJulio24.JPA.Semestre());
+            alumnoJPA.getSemestre().setIdSemestre(alumno.getSemestre().getIdSemestre());
+            alumnoJPA.setImagen(alumno.getImagen());
+            alumnoJPA.setStatus(1);
+            alumnoJPA.setIdAlumno(42);
+            entityManager.merge(alumnoJPA); //ADD
+            result.object = alumnoJPA.getIdAlumno();
+            result.correct = true;
+        }
+        catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.exception = ex;
+        }
+        return result;
+
+    }
+    
+    
+    @Override
+    @Transactional
     public Result AddJPA(Alumno alumno) {
         Result result = new Result();
         try{
@@ -195,12 +242,12 @@ public class AlumnoDAOImplementation implements AlumnoDAO{
             //REMOVE SE LE TIENE QUE ENVIAR EL REGISTRO A ELIMINAR
                 //GETBYID
                     //REMOVE
-                  
-            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno AlumnoGetByIDJPA =  entityManager.find(com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno.class, 63);
-            Alumno alumnoML = new Alumno();
-            alumnoML.setNombre(AlumnoGetByIDJPA.getNombre());  //METODO DEL GETBYID
-            entityManager.detach(AlumnoGetByIDJPA);
-            
+//                  
+//            com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno AlumnoGetByIDJPA =  entityManager.find(com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno.class, 63);
+//            Alumno alumnoML = new Alumno();
+//            alumnoML.setNombre(AlumnoGetByIDJPA.getNombre());  //METODO DEL GETBYID
+//            entityManager.detach(AlumnoGetByIDJPA);
+//            
             //
             
             com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno alumnoJPA = new com.Digis01.ProgramacionNCapasJulio24.JPA.Alumno();
