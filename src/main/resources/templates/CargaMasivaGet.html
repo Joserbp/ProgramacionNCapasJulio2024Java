@@ -12,5 +12,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>
         <div>TODO write content</div>
         <h1>CARGA MASIVA</h1>
+        
+        <form th:action="@{/CargaMasiva/txt}" method="post" enctype="multipart/form-data">
+        <label>Carga de Txt</label>
+        <input type='file' id='txtFile' name='txtFile'/>
+        <button class='btn btn-success'>Cargar</button>
+        </form>
+         <form th:action="@{/CargaMasiva/excel}" method="post" enctype="multipart/form-data">
+        <label>Carga de Excel</label>
+        <input type='file' id='excelFile' name='excelFile'/>
+        <button class='btn btn-success'>Cargar</button>
+         </form>
     </body>
 </html>
