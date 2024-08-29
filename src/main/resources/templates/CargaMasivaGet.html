@@ -22,6 +22,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <label>Carga de Excel</label>
         <input type='file' id='excelFile' name='excelFile'/>
         <button class='btn btn-success'>Cargar</button>
-         </form>
+        </form>
+        
+        
+        <!--if--  errores != null>
+        <table> 
+            <thead>
+                <th>Fila</th>
+                <th>Mensaje</th>
+            </thead>
+            <tbody>
+                th:each errores 
+                <th th:field="*{Fila}"></th>
+                <th th:field="*{Mensaje}"></th>
+            </tbody>
+        </table>
     </body>
 </html>

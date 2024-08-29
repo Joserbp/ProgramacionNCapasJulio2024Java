@@ -6,6 +6,7 @@ package com.Digis01.ProgramacionNCapasJulio24.Controller;
 
 import com.Digis01.ProgramacionNCapasJulio24.DAO.AlumnoDAOImplementation;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Alumno;
+import com.Digis01.ProgramacionNCapasJulio24.ML.ErrorExcel;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,12 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,7 +87,7 @@ public class CargaMasiva {
     }
     
     @PostMapping("/excel")
-    public String CargaExcel(@RequestParam MultipartFile excelFile){
+    public String CargaExcel(Model model,@RequestParam MultipartFile excelFile){
     try {
         if(excelFile != null && !excelFile.isEmpty()){
             
@@ -101,8 +104,11 @@ public class CargaMasiva {
                 excelFile.transferTo(new File(pathFinal)); //Guarda un archivo copia
                
                 List<Alumno> alumnos = LeerExcel(pathFinal);
-                //ValidarDatos(alumnos);  // Mostrar errores en caso de existir
-                //ValidarDatos(alumnos);
+                List<ErrorExcel> errores = ValidarDatos(alumnos);  // Mostrar errores en caso de existir
+                if(errores.size() > 0){ //Hay Errores
+                    model.addAttribute("ListaErrores", errores);
+                    return "CargaMasivaGet";
+                }
                 
             }else{
                 //Mensaje de error
@@ -142,13 +148,18 @@ public class CargaMasiva {
             alumno.setNombre(row.getCell(0).toString());
             alumno.setApellido(row.getCell(1).toString());
             alumno.setSemestre(new Semestre());
-            //En una sola linea ----------
+            //Sin apache
+//            if(!row.getCell(5).toString().equals("")){
+//            String idSemestre = row.getCell(5).toString();
+//            double numeroDouble = Double.parseDouble(idSemestre);
+//            int numeroInt = (int)numeroDouble;
+//            alumno.getSemestre().setIdSemestre(numeroInt);
+//            }
+//          //Con libreria de Apache
             String idSemestre = row.getCell(5).toString();
-            double numeroDouble = Double.parseDouble(idSemestre);
-            int numeroInt = (int)numeroDouble;
-            // ----------
-            alumno.getSemestre().setIdSemestre(numeroInt);
-            
+            double idSemestreDouble = NumberUtils.toDouble(idSemestre, 0); //Ex(X) default
+            int idSemestreInt = (int)idSemestreDouble;
+            alumno.getSemestre().setIdSemestre(idSemestreInt);
             alumnos.add(alumno);
             }  
         }
@@ -163,5 +174,29 @@ public class CargaMasiva {
         //Celdas  3 //DATOS
         //Libros  1
         //Hojas  2
+    }
+
+    public List<ErrorExcel> ValidarDatos(List<Alumno> alumnos) {
+        List<ErrorExcel> erroresExcel = new ArrayList<ErrorExcel>();
+        int fila = 2;
+        for(Alumno alumnoAValidar : alumnos){
+            String errores = "";
+            if(alumnoAValidar.getNombre().equals("")){ //STRING
+                errores += "Falta el nombre, " ;
+            }
+            //(condicion) ? true : false
+            errores += (alumnoAValidar.getApellido().equals("")) ? "Falta Apellido, " : "";
+            
+            if(alumnoAValidar.getSemestre().getIdSemestre() == 0){
+                 errores += "Falta el IdSemestre, " ;
+            }
+            
+            if(!errores.equals("")){
+                ErrorExcel errorExcel = new ErrorExcel(fila, errores);
+                erroresExcel.add(errorExcel);
+            }
+            fila++;
+        }
+        return erroresExcel;
     }
 }
