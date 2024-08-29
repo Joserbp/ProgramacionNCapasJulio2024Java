@@ -14,12 +14,14 @@ import com.Digis01.ProgramacionNCapasJulio24.ML.Estado;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Pais;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,12 +81,17 @@ public class AlumnoController {
     
     
     @PostMapping("/Form")
-    public String Form(@ModelAttribute Alumno alumno, @RequestParam("fileImagen") MultipartFile fileImage){ 
+    public String Form(@Valid @ModelAttribute Alumno alumno, BindingResult bindingResult, @RequestParam("fileImagen") MultipartFile fileImage, Model model){ 
         //Validar el ID
         //Id = 0 ADD
         //ID != 0 UPDATE
         //int rowAffetted = alumnoDAOImplementation.Add(alumno);
-       
+        
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("Alumno", alumno);
+            return "AlumnoForm";
+        }
+        
         if(fileImage.getName() != ""){
             try{
             byte[] imagenBytes = fileImage.getBytes();

@@ -22,7 +22,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <br>
                 
                 <label>Nombre</label>
-                <input id="txtNombre" type="text" placeholder="Ingresa tu nombre" th:field="*{Nombre}">
+                <input id="txtNombre" type="text" placeholder="Ingresa tu nombre" th:field="*{Nombre}" onkeypress="return SoloLetras(event, 'errorMessageName')">
+                <!--se llena con validación del cliente-->
+                <span id="errorMessageName" class="text-danger"></span>
+                <!--se llena con validacion del servidor-->
+                <label class="text-danger" th:if="${#fields.hasErrors('Nombre')}" th:errors="${alumno.Nombre}"></label>
                 <br>
                 <label>Apellido</label>
                 <input type="text" placeholder="Ingresa tu apellido" th:field="*{Apellido}">
@@ -77,6 +81,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 </html>
 
 <script>
+    
+//    una funcion que valide si la entrada son letras 
+    function SoloLetras(evento, span){
+        var regEx = '^[a-zA-Z]+$';
+        var key = evento.key;
+        var SpanText = document.getElementById(span);
+        if (key.match(regEx)){
+            SpanText.innerHTML = "";
+            return true;
+        } else {
+            SpanText.innerHTML = "Solo letras";
+            return false;
+        }
+    }
     
     const input = document.getElementById('fileImagen');
    

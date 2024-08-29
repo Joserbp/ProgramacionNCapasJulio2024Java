@@ -100,7 +100,8 @@ public class CargaMasiva {
             
                 excelFile.transferTo(new File(pathFinal)); //Guarda un archivo copia
                
-                List<Alumno> alumnos = LeerExcel(excelFile);
+                List<Alumno> alumnos = LeerExcel(pathFinal);
+                //ValidarDatos(alumnos);  // Mostrar errores en caso de existir
                 //ValidarDatos(alumnos);
                 
             }else{
@@ -124,20 +125,39 @@ public class CargaMasiva {
     }
     
     
-    public List<Alumno> LeerExcel(MultipartFile excelFile) throws IOException{
-        XSSFWorkbook workBook = new XSSFWorkbook(excelFile.getInputStream());
-        Sheet sheet = workBook.getSheetAt(0);
+    public List<Alumno> LeerExcel(String pathExcel){
         List<Alumno> alumnos = new ArrayList<>();
-        for(Row row : sheet){
+        try{
+        XSSFWorkbook workBook = new XSSFWorkbook(pathExcel);
+        Sheet sheet = workBook.getSheetAt(0);
+        
+        boolean isPrimeraFila = true;
+        for(Row row : sheet){  //Lectura es de inicio a fin
+           // if(row[0] ) continue;
+            //if(row.getCell(0).toString().equals("Nombre")) continue;
+            if(isPrimeraFila){
+                isPrimeraFila = false;
+            }else{
             Alumno alumno = new Alumno();
             alumno.setNombre(row.getCell(0).toString());
             alumno.setApellido(row.getCell(1).toString());
             alumno.setSemestre(new Semestre());
-            alumno.getSemestre().setIdSemestre(Integer.parseInt(row.getCell(5).toString()));
+            //En una sola linea ----------
+            String idSemestre = row.getCell(5).toString();
+            double numeroDouble = Double.parseDouble(idSemestre);
+            int numeroInt = (int)numeroDouble;
+            // ----------
+            alumno.getSemestre().setIdSemestre(numeroInt);
             
             alumnos.add(alumno);
+            }  
+        }
+        }
+            catch(Exception ex){
+            
         }
         return alumnos;
+        
         //Filas 4
         //Columnas 4
         //Celdas  3 //DATOS

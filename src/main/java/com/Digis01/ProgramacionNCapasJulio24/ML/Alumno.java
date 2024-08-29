@@ -4,14 +4,21 @@
  */
 package com.Digis01.ProgramacionNCapasJulio24.ML;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 /**
  *
  * @author digis
  */
 public class Alumno {
      private int IdAlumno;
+    @NotEmpty( message = "El campo no puede ser vacio")
+    @Size(min = 3, max = 8, message = "El rango es de 3 a 8 caracteres")
     private String Nombre;
     private String Apellido;
+//    @Pattern(regexp = )
     private String FechaNacimiento;
     private String Genero;
     private String Telefono;
