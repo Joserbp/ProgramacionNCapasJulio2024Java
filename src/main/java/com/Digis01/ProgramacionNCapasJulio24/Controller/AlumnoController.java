@@ -14,11 +14,17 @@ import com.Digis01.ProgramacionNCapasJulio24.ML.Estado;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Pais;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Result;
 import com.Digis01.ProgramacionNCapasJulio24.ML.Semestre;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -49,13 +56,39 @@ public class AlumnoController {
     private PaisDAOImplementation paisDAOImplementation;
     @Autowired
     private EstadoDAOImplementation estadoDAOImplementation;
-            
+    
+    private RestTemplate restTemplate = new RestTemplate();
             
     @GetMapping("/GetAll")
     public String GetAll(Model model){
         //Object datos = alumnoDAOImplementation.GetAll();
-        Result result = alumnoDAOImplementation.GetAllSP();
-        model.addAttribute("Alumnos", (List<Alumno>)result.object);
+        //Result result = alumnoDAOImplementation.GetAllSP();
+        //Serializar y Desearializar
+        String url = "http://localhost:8080/api/Alumno/GetAll";
+       // String url = "http://localhost:8080/api/Alumno/Delete/" + idAlumno;
+        //JSON -- BODY
+        //Path
+        //Verbo
+        List<Alumno> alumnos = new ArrayList<>();
+        ResponseEntity<Result> response = restTemplate.getForEntity(url, Result.class); //Consumo
+        
+        //Code
+        if(response.getStatusCode() == HttpStatus.OK){
+            Result resultApi = response.getBody();
+            List<LinkedHashMap<String,Object>> alumnosJSON = (List<LinkedHashMap<String,Object>>)resultApi.object;
+            
+            ObjectMapper objectMapper = new ObjectMapper(); //MEtodos de conversion
+            for(LinkedHashMap<String,Object> alumnoJSON : alumnosJSON){
+                //JACKSON  --- JSON -- CLASE
+                Alumno alumno = objectMapper.convertValue(alumnoJSON, Alumno.class);
+                alumnos.add(alumno);
+            }
+            
+            //Alumno alumno = new Alumno();
+        }else{
+            //Error
+        }
+        model.addAttribute("Alumnos", alumnos);
         return "AlumnoGetAll";
     }
     

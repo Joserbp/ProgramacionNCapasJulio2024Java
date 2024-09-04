@@ -29,7 +29,6 @@ public class AlumnoRestController {
     @Autowired
     private AlumnoDAOImplementation alumnoDAOImplementation;
 
-
     @PostMapping("/Add")
     public ResponseEntity Add(@RequestBody Alumno alumno){
        Result result = alumnoDAOImplementation.AddJPA(alumno);
