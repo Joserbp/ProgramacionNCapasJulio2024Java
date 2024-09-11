@@ -26,6 +26,20 @@ public class Alumno {
     private String Email;
     private String Imagen;
     private int Status;
+    
+    
+    //EMPLEADO
+    private String Action;
+
+    public String getAction() {
+        return Action;
+    }
+
+    public void setAction(String Action) {
+        this.Action = Action;
+    }
+        
+    //FIN
 
     public int getStatus() {
         return Status;

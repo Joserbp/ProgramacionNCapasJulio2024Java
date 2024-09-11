@@ -97,12 +97,18 @@ public class AlumnoController {
         
         if(idAlumno == 0){ //ADD
             Alumno alumno = new Alumno();
-            alumno.setSemestre(new Semestre());      
+            alumno.setSemestre(new Semestre());  
+            //Empleado
+            alumno.setAction("Add");
+            //Fin
             model.addAttribute("Alumno", alumno);     
         }else{  //Update
             Result alumnoActualizar = alumnoDAOImplementation.GetByIdJPA(idAlumno);
         //    List<Alumno> alumnos = (List<Alumno>)alumnoActualizar;
-            Alumno alumno = (Alumno)alumnoActualizar.object;        
+            Alumno alumno = (Alumno)alumnoActualizar.object;
+            //Empleado
+            alumno.setAction("Update");
+            //FIN
             model.addAttribute("Alumno", alumno);
         }
         Object datosSemestre = semestreDAOImplementation.GetAll();
@@ -149,6 +155,15 @@ public class AlumnoController {
              Result result = alumnoDAOImplementation.UpdateJPA(alumno);
         }
 
+        // INICIA PROCESOS PARA CRUD EMPLEADO
+        if(alumno.getAction().equals("Add")){
+            //DAO Add
+        }else{
+            //DAO Update
+        }        
+        //FIN DE PROCESO
+        
+        
         return "redirect:/Alumno/GetAll";
     }
     //Recibir la informacion de la vista
